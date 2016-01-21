@@ -15,22 +15,22 @@ namespace ConsoleApplication1
         // the 'Main' method is the first method in the program that will be run.
         static void Main(string[] args)
         {
-            int runningTotal = 0;
-            bool keepGoing = true;
+            var runningTotal = 0.0;
 
-            while (keepGoing)
+            while (true)
             {
                 // Prompt the user for minutes exercised
                 Console.Write("Enter how many minutes you exercised or type \"quit\" to exit: ");
-                string minutesEntered = Console.ReadLine();
+                var minutesEntered = Console.ReadLine();
 
-                if (minutesEntered == "quit")
+                if (minutesEntered.ToLower() == "quit")
                 {
-                    keepGoing = false;
+                    break;
                 }
-                else
+
+                try
                 {
-                    int minutes = int.Parse(minutesEntered);
+                    var minutes = double.Parse(minutesEntered);
 
                     if (minutes <= 0)
                     {
@@ -54,13 +54,17 @@ namespace ConsoleApplication1
                     }
 
                     // Add minutes exercised to running total
-                    runningTotal = runningTotal + minutes;
+                    runningTotal += minutes;
 
                     // Display total minutes exercised
                     Console.WriteLine("You've exercised " + runningTotal + " minutes.");
                     Console.ReadLine();
                 }
-
+                catch (FormatException)
+                {
+                    Console.WriteLine("That's not valid input");
+                    continue;
+                }
             }
             Console.WriteLine("Goodbye.");
 
